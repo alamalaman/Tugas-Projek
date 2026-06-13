@@ -1,0 +1,72 @@
+import alam013
+
+
+def input_matriks(nama_matriks):
+    print(f"\nMasukkan ukuran {nama_matriks}")
+    baris = int(input(f"Jumlah baris {nama_matriks}: "))
+    kolom = int(input(f"Jumlah kolom {nama_matriks}: "))
+    print(f"Masukkan nilai {nama_matriks} (per baris, dipisah spasi)")
+    matriks = []
+    for i in range(baris):
+        while True:
+            data = input(f"Baris {i + 1}: ").split()
+            if len(data) != kolom:
+                print(f"  -> Harus {kolom} angka, dipisah spasi. Coba lagi.")
+                continue
+            try:
+                baris_matriks = [float(x) for x in data]
+            except ValueError:
+                print("  -> Input harus berupa angka. Coba lagi.")
+                continue
+            matriks.append(baris_matriks)
+            break
+    return matriks
+
+def main():
+    print("=== Program Aljabar Matriks ===")
+    print("1. Penjumlahan (A + B)")
+    print("2. Pengurangan (A - B)")
+    print("3. Perkalian (A x B)")
+    print("4. Transpose A")
+    pilihan = input("\nPilih operasi (1-4): ").strip()
+    if pilihan == "1":
+        A = input_matriks("Matriks A")
+        B = input_matriks("Matriks B (ukuran harus sama dengan A)")
+        try:
+            hasil = alam013.tambah_matriks(A, B)
+            alam013.tampilkan_matriks(A, "Matriks A")
+            alam013.tampilkan_matriks(B, "Matriks B")
+            alam013.tampilkan_matriks(hasil, "Hasil A + B")
+        except ValueError as e:
+            print("Error:", e)
+    elif pilihan == "2":
+        A = input_matriks("Matriks A")
+        B = input_matriks("Matriks B (ukuran harus sama dengan A)")
+        try:
+            hasil = alam013.kurang_matriks(A, B)
+            alam013.tampilkan_matriks(A, "Matriks A")
+            alam013.tampilkan_matriks(B, "Matriks B")
+            alam013.tampilkan_matriks(hasil, "Hasil A - B")
+        except ValueError as e:
+            print("Error:", e)
+    elif pilihan == "3":
+        A = input_matriks("Matriks A")
+        B = input_matriks("Matriks B (jumlah baris B harus sama dengan jumlah kolom A)")
+        try:
+            hasil = alam013.kali_matriks(A, B)
+            alam013.tampilkan_matriks(A, "Matriks A")
+            alam013.tampilkan_matriks(B, "Matriks B")
+            alam013.tampilkan_matriks(hasil, "Hasil A x B")
+        except ValueError as e:
+            print("Error:", e)
+    elif pilihan == "4":
+        A = input_matriks("Matriks A")
+        hasil = alam013.transpose_matriks(A)
+        alam013.tampilkan_matriks(A, "Matriks A")
+        alam013.tampilkan_matriks(hasil, "Transpose A")
+    else:
+        print("Pilihan tidak valid. Silakan pilih 1-4.")
+
+
+if __name__ == "__main__":
+    main()
